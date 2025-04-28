@@ -27,6 +27,6 @@ How to use [Video Tutorials](https://www.youtube.com/@%E6%9C%AA%E7%9F%A5%E5%8F%9
 
 5. Search for [ESP-IDF Extension](https://marketplace.visualstudio.com/items?itemName=unkx.esp-idf-tools-extension).
 
-6. Install the extension. After you install the extension, Multiple icons will appear in the status bar at the bottom of VScode, click to use as needed.
+6. Install the extension. After you install the extension, When the esp-idf project is opened, Multiple icons will appear in the status bar at the bottom of VScode, click to use as needed.
 
 **Enjoy!**

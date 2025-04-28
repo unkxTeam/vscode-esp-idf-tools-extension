@@ -27,6 +27,6 @@
 
 5. 搜索 [ESP-IDF-Tools 扩展](https://marketplace.visualstudio.com/items?itemName=unkx.esp-idf-tools-extension)。
 
-6. 安装上述扩展。安装成功后，vscode底部的状态栏会出现多个图标，根据需要点击使用即可。
+6. 安装上述扩展。安装成功后，当打开的项目是esp-idf工程时，vscode底部的状态栏会出现多个图标，根据需要点击使用即可。
 
 **Enjoy!**

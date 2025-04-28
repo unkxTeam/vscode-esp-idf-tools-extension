@@ -1,10 +1,15 @@
+[中文](https://github.com/unkxTeam/vscode-esp-idf-tools-extension/blob/master/README_zh.md)
+[使用视频教程](https://www.bilibili.com/video/BV1YUL1z3Ee2)
+
 # ESP-IDF-Tools Extension for VS Code
 
 The purpose of this VScode extension is to enable users to develop Espressif ESP idf projects more efficiently on VScode, which can be used on both Windows and Linux platforms. This extension allows for easy configuration, build, flash, monitor, debug and more on ESP idf projects. [Espressif documentation](https://docs.espressif.com/projects/vscode-esp-idf-extension/en/latest/index.html)
 
 # How to use
 
-How to use [Video Tutorials](https://www.youtube.com/@%E6%9C%AA%E7%9F%A5%E5%8F%98%E9%87%8Funkx).
+How to use Video Tutorials: 
+- [https://youtube.com/playlist?list=PLLlul6hf_nLnqmhkqW7F4g8KuBVbn2fv7&si=ErHBLomNsJbYmH17](https://youtube.com/playlist?list=PLLlul6hf_nLnqmhkqW7F4g8KuBVbn2fv7&si=ErHBLomNsJbYmH17)
+- [https://www.bilibili.com/video/BV1YUL1z3Ee2](https://www.bilibili.com/video/BV1YUL1z3Ee2)
 
 ## Install
 

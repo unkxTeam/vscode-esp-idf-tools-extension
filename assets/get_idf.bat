@@ -1,0 +1,1 @@
+idf_cmd_init.bat esp-idf-ad5d4ae340c39bc556afa783e091e773

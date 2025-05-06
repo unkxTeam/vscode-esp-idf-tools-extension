@@ -1,6 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { SerialPort } from "serialport";
 // https://github.com/microsoft/vscode-extension-samples/blob/main/helloworld-sample/package.json
 
 let selectPortCOM = "COM1";
@@ -69,23 +70,17 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 	// TODO: Monitor idf.py -p <PORT> monitor
 	
 	subscriptions.push(vscode.commands.registerCommand(myCommandIdSelectPort_0, () => {
-		// 打开一个 input
-        vscode.window.showInputBox({
-            ignoreFocusOut: true, // 当焦点移动到编辑器的另一部分或另一个窗口时, 保持输入框打开
-            password: false, // 为 true 就表示是密码类型
-            prompt: "Please input Serial Port. Example: COM4, /dev/ttyUSB0", // 文本输入提示
-            value: selectPortCOM, // 默认值, 默认全部选中
-            valueSelection: [3, -1],  // 指定选中的范围
-        }).then(value => {
-            if (!value || !value?.trim()) {
-                vscode.window.showErrorMessage("Invalid value!");
-                return;
-            };
-			selectPortCOM = value.trim();
-			myStatusBarItemSelectPort_0.text = `$(plug) `+selectPortCOM;
-            vscode.window.showInformationMessage(`ESP-IDF-Tools: Serial Port is ${value.trim()}`);
-        });
-
+		pickSerialPort().then(portPath => {
+			selectPortCOM = `${portPath}`;
+			myStatusBarItemSelectPort_0.text = `$(plug) ` + selectPortCOM;
+			if(!portPath){
+				vscode.window.showErrorMessage(`${portPath}`);
+				return;
+			}
+			else{
+				vscode.window.showInformationMessage(`ESP-IDF-Tools: Serial Port is: ${selectPortCOM}`);
+			}
+		});
 	}));
 	subscriptions.push(vscode.commands.registerCommand(myCommandIdSetTarget_1, () => {
 		if (terminal.exitStatus) {
@@ -94,14 +89,14 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 		}
 		
 		vscode.window.showInputBox({
-            ignoreFocusOut: true,
+            ignoreFocusOut: false,
             password: false,
             prompt: "Please input esp-idf target. Can be: esp32|esp32s2|esp32c3|esp32s3|esp32c2|esp32c6|esp32h2|esp32p4|linux|esp32c5|esp32c61",
             value: selectESPIDFTarget,
             valueSelection: [3, -2],
         }).then(value => {
             if (!value || !value?.trim()) {
-                vscode.window.showErrorMessage("Invalid value!");
+                //vscode.window.showErrorMessage("Invalid value!");
                 return;
             };
 			selectESPIDFTarget = value.trim();
@@ -277,3 +272,22 @@ function updateParameter() {
 	}
 }
 
+async function pickSerialPort(): Promise<string | undefined> {
+    const serialPortItems: Thenable<vscode.QuickPickItem[]> = new Promise((resolve, reject) => {
+        listSerialPort().then((ports) => {
+            const portItems: vscode.QuickPickItem[] = ports.map((port) => {
+                return { label: port.path, description: port.manufacturer };
+            });
+            resolve(portItems);
+        }).catch((error) => {
+            reject(error);
+        });
+    });
+
+    let port = await vscode.window.showQuickPick(serialPortItems);
+    return port ? port.label : undefined;
+}
+
+async function listSerialPort() {
+    return SerialPort.list();
+}

@@ -23,10 +23,16 @@
     ```
     然后在环境变量的`path`中添加 `C:\Espressif`。
 
-4. 打开 VS Code，点击左侧活动栏中的扩展图标，或使用**查看：显示扩展**命令（快捷键：<kbd>⇧</kbd><kbd>⌘</kbd><kbd>X</kbd> 或 <kbd>Ctrl+Shift+X</kbd>）。
+4. 如果你的是Mac或Linux平台，请复制并粘贴以下命令到 shell 配置文件中（`.profile`、`.bashrc`、`.zprofile` 等）：
 
-5. 搜索 [ESP-IDF-Tools 扩展](https://marketplace.visualstudio.com/items?itemName=unkx.esp-idf-tools-extension)。
+    ```shell
+    alias get_idf='. $HOME/esp/esp-idf/export.sh'
+    ```
 
-6. 安装上述扩展。安装成功后，当打开的项目是esp-idf工程时，vscode底部的状态栏会出现多个图标，根据需要点击使用即可。
+5. 打开 VS Code，点击左侧活动栏中的扩展图标，或使用**查看：显示扩展**命令（快捷键：<kbd>⇧</kbd><kbd>⌘</kbd><kbd>X</kbd> 或 <kbd>Ctrl+Shift+X</kbd>）。
+
+6. 搜索 [ESP-IDF-Tools 扩展](https://marketplace.visualstudio.com/items?itemName=unkx.esp-idf-tools-extension)。
+
+7. 安装上述扩展。安装成功后，当打开的项目是esp-idf工程时，vscode底部的状态栏会出现多个图标，根据需要点击使用即可。
 
 **Enjoy!**

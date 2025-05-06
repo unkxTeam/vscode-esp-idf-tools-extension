@@ -17,8 +17,8 @@ How to use Video Tutorials:
 
 2. Install ESP-IDF system prerequisites for your operating system:
 
-- Prerequisites for [MacOS and Linux](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-macos-setup.html).
-- Prerequisites for [Windows](https://dl.espressif.com/dl/esp-idf/).**Please note that an offline installation package needs to be downloaded for installation**.
+    - Prerequisites for [MacOS and Linux](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-macos-setup.html).
+    - Prerequisites for [Windows](https://dl.espressif.com/dl/esp-idf/).**Please note that an offline installation package needs to be downloaded for installation**.
 
 3. If your platform is **Windows**. Please follow here to perform some additional operations([Video Tutorials](https://www.youtube.com/@%E6%9C%AA%E7%9F%A5%E5%8F%98%E9%87%8Funkx)):
 

@@ -12,8 +12,8 @@
 
 2. 在操作系统中安装 ESP-IDF 所需的软件包：
 
-- 适用于 [MacOS 和 Linux](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/linux-macos-setup.html) 的软件包。
-- 适用于[Windows的安装软件包](https://dl.espressif.com/dl/esp-idf/)。**注意，需要下载离线安装包进行安装**。
+    - 适用于 [MacOS 和 Linux](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/linux-macos-setup.html) 的软件包。
+    - 适用于[Windows的安装软件包](https://dl.espressif.com/dl/esp-idf/)。**注意，需要下载离线安装包进行安装**。
 
 3. 如果你的是windows平台，请按照这里进行一些额外操作（[视频教程](https://space.bilibili.com/3546857808595431)）：
 

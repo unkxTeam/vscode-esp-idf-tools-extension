@@ -8,7 +8,7 @@ let selectPortCOM = "COM1";
 let selectESPIDFTarget = "esp32";
 let get_idf_cmd = "get_idf.bat";
 
-const terminalOptions = {
+const unkxTerminalOptions = {
     name: "unkx: esp-idf-tools",
     //shellPath: "/bin/bash",
 	shellPath: 'cmd',
@@ -47,14 +47,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 
 	// Create terminal
 	updateParameter();
-	//const terminal = vscode.window.createTerminal(terminalOptions);
-	let terminal = vscode.window.createTerminal(terminalOptions);
-	terminal.show();
-
-	function createTerminal() {
-		terminal = vscode.window.createTerminal(terminalOptions);
-		terminal.show();
-	}
+	let unkxTerminal = createUnkxTerminal();	
 
 	// Register a command that is invoked when the status bar
 	// https://code.visualstudio.com/api/references/icons-in-labels
@@ -83,15 +76,15 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 		});
 	}));
 	subscriptions.push(vscode.commands.registerCommand(myCommandIdSetTarget_1, () => {
-		if (terminal.exitStatus) {
-			terminal = vscode.window.createTerminal(terminalOptions);
-			terminal.sendText(get_idf_cmd);
+		if (unkxTerminal.exitStatus) {
+			unkxTerminal = createUnkxTerminal();
+			unkxTerminal.sendText(get_idf_cmd);
 		}
 		
 		vscode.window.showInputBox({
             ignoreFocusOut: false,
             password: false,
-            prompt: "Please input esp-idf target. Can be: esp32|esp32s2|esp32c3|esp32s3|esp32c2|esp32c6|esp32h2|esp32p4|linux|esp32c5|esp32c61",
+            prompt: "Please input esp-idf target. Can be: esp32,esp32s2,esp32c3,esp32s3,esp32c2,esp32c6,esp32h2,esp32p4,linux,esp32c5,esp32c61, etc.",
             value: selectESPIDFTarget,
             valueSelection: [3, -2],
         }).then(value => {
@@ -102,65 +95,65 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 			selectESPIDFTarget = value.trim();
             vscode.window.showInformationMessage(`ESP-IDF-Tools: esp-idf target is ${value.trim()}`);
 
-			terminal.show();
-			terminal.sendText("idf.py set-target "+selectESPIDFTarget);
+			unkxTerminal.show();
+			unkxTerminal.sendText("idf.py set-target "+selectESPIDFTarget);
         });
 	}));
 	subscriptions.push(vscode.commands.registerCommand(myCommandIdMenuconfig_2, () => {
-		if (terminal.exitStatus) {
-			terminal = vscode.window.createTerminal(terminalOptions);
-			terminal.sendText(get_idf_cmd);
+		if (unkxTerminal.exitStatus) {
+			unkxTerminal = createUnkxTerminal();
+			unkxTerminal.sendText(get_idf_cmd);
 		}
-		terminal.show();
-		terminal.sendText("idf.py menuconfig");
+		unkxTerminal.show();
+		unkxTerminal.sendText("idf.py menuconfig");
 	}));
 	subscriptions.push(vscode.commands.registerCommand(myCommandIdBuild_3, () => {
-		if (terminal.exitStatus) {
-			terminal = vscode.window.createTerminal(terminalOptions);
-			terminal.sendText(get_idf_cmd);
+		if (unkxTerminal.exitStatus) {
+			unkxTerminal = createUnkxTerminal();
+			unkxTerminal.sendText(get_idf_cmd);
 		}
-		terminal.show();
-		terminal.sendText("idf.py build");
+		unkxTerminal.show();
+		unkxTerminal.sendText("idf.py build");
 	}));
 	subscriptions.push(vscode.commands.registerCommand(myCommandIdFlash_4, () => {
-		if (terminal.exitStatus) {
-			terminal = vscode.window.createTerminal(terminalOptions);
-			terminal.sendText(get_idf_cmd);
+		if (unkxTerminal.exitStatus) {
+			unkxTerminal = createUnkxTerminal();
+			unkxTerminal.sendText(get_idf_cmd);
 		}
-		terminal.show();
-		terminal.sendText("idf.py -p "+selectPortCOM+" flash");
+		unkxTerminal.show();
+		unkxTerminal.sendText("idf.py -p "+selectPortCOM+" flash");
 	}));
 	subscriptions.push(vscode.commands.registerCommand(myCommandIdBuildFlash_5, () => {
-		if (terminal.exitStatus) {
-			terminal = vscode.window.createTerminal(terminalOptions);
-			terminal.sendText(get_idf_cmd);
+		if (unkxTerminal.exitStatus) {
+			unkxTerminal = createUnkxTerminal();
+			unkxTerminal.sendText(get_idf_cmd);
 		}
-		terminal.show();
-		terminal.sendText("idf.py -p "+selectPortCOM+" flash");
+		unkxTerminal.show();
+		unkxTerminal.sendText("idf.py -p "+selectPortCOM+" flash");
 	}));
 	subscriptions.push(vscode.commands.registerCommand(myCommandIdFullclean_6, () => {
-		if (terminal.exitStatus) {
-			terminal = vscode.window.createTerminal(terminalOptions);
-			terminal.sendText(get_idf_cmd);
+		if (unkxTerminal.exitStatus) {
+			unkxTerminal = createUnkxTerminal();
+			unkxTerminal.sendText(get_idf_cmd);
 		}
-		terminal.show();
-		terminal.sendText("idf.py fullclean");
+		unkxTerminal.show();
+		unkxTerminal.sendText("idf.py fullclean");
 	}));
 	subscriptions.push(vscode.commands.registerCommand(myCommandIdMonitor_7, () => {
-		if (terminal.exitStatus) {
-			terminal = vscode.window.createTerminal(terminalOptions);
-			terminal.sendText(get_idf_cmd);
+		if (unkxTerminal.exitStatus) {
+			unkxTerminal = createUnkxTerminal();
+			unkxTerminal.sendText(get_idf_cmd);
 		}
-		terminal.show();
-		terminal.sendText("idf.py -p "+selectPortCOM+" monitor");
+		unkxTerminal.show();
+		unkxTerminal.sendText("idf.py -p "+selectPortCOM+" monitor");
 	}));
 	subscriptions.push(vscode.commands.registerCommand(myCommandIdBuildFlashMonitor_8, () => {
-		if (terminal.exitStatus) {
-			terminal = vscode.window.createTerminal(terminalOptions);
-			terminal.sendText(get_idf_cmd);
+		if (unkxTerminal.exitStatus) {
+			unkxTerminal = createUnkxTerminal();
+			unkxTerminal.sendText(get_idf_cmd);
 		}
-		terminal.show();
-		terminal.sendText("idf.py -p "+selectPortCOM+" flash monitor");
+		unkxTerminal.show();
+		unkxTerminal.sendText("idf.py -p "+selectPortCOM+" flash monitor");
 	}));
 
 	// create a new status bar item that we can now manage
@@ -253,24 +246,51 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 	//subscriptions.push(disposable);
 	//context.subscriptions.push(disposable);
 
-	terminal.sendText(get_idf_cmd);
+	unkxTerminal.show();
+	unkxTerminal.sendText(get_idf_cmd);
 }
 
 // This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+	//closeTerminal();
+}
+
+async function closeTerminal() {
+	const myTerminal = vscode.window.terminals.find(t => t.name === "unkx: esp-idf-tools");
+	if (myTerminal) {
+		myTerminal.dispose();
+		return Promise.resolve(undefined);
+	}
+
+	//if(vscode.window.activeTerminal)
+	//{
+	//	vscode.window.activeTerminal?.dispose();
+	//}
+}
 
 function updateParameter() {
 	if(process.platform === 'win32'){
-		terminalOptions.shellPath = 'cmd';
+		unkxTerminalOptions.shellPath = 'cmd';
 		get_idf_cmd = "get_idf.bat";
 		selectPortCOM = "COM1";
 	}
 	else if(process.platform === 'linux'){
-		terminalOptions.shellPath = 'bash';
+		unkxTerminalOptions.shellPath = 'bash';
 		get_idf_cmd = "get_idf";
 		selectPortCOM = "/dev/ttyUSB0";
 	}
 }
+
+function createUnkxTerminal(): vscode.Terminal {
+	let terminal = vscode.window.terminals.find(t => t.name === unkxTerminalOptions.name);
+
+	if(!terminal)
+	{
+		terminal = vscode.window.createTerminal(unkxTerminalOptions); 
+	}
+
+	return terminal;
+} 
 
 async function pickSerialPort(): Promise<string | undefined> {
     const serialPortItems: Thenable<vscode.QuickPickItem[]> = new Promise((resolve, reject) => {

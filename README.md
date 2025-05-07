@@ -40,4 +40,6 @@ How to use Video Tutorials:
 
 7. Install the extension. After you install the extension, When the esp-idf project is opened, Multiple icons will appear in the status bar at the bottom of VScode, click to use as needed.
 
+    ![](./assets/001_imgReadme.png)
+
 **Enjoy!**

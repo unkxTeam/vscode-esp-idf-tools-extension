@@ -4,7 +4,7 @@ import * as vscode from 'vscode';
 import { SerialPort } from "serialport";
 // https://github.com/microsoft/vscode-extension-samples/blob/main/helloworld-sample/package.json
 
-let selectPortCOM = "COM1";
+let selectPortCOM = "PORT";
 let selectESPIDFTarget = "esp32";
 let get_idf_cmd = "get_idf.bat";
 

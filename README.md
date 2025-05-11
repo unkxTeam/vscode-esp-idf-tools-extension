@@ -3,7 +3,7 @@
 
 # ESP-IDF-Tools Extension for VS Code
 
-The purpose of this VScode extension is to enable users to develop Espressif ESP idf projects more efficiently on VScode, which can be used on both Windows and Linux platforms. This extension allows for easy configuration, build, flash, monitor, debug and more on ESP idf projects. [Espressif documentation](https://docs.espressif.com/projects/vscode-esp-idf-extension/en/latest/index.html)
+The purpose of this VScode extension is to enable users to develop Espressif ESP idf projects more efficiently on VScode, which can be used on both Windows and Linux platforms. This extension allows for easy configuration, build, flash, monitor, debug and more on ESP idf projects. [Espressif documentation](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/index.html)
 
 # How to use
 

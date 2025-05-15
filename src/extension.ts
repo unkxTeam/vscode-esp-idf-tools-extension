@@ -167,14 +167,14 @@ export function activate(context: vscode.ExtensionContext) {
         {
           enableScripts: true,
         }
-      )
+      );
 
       const htmlPath = path.join(
         context.extensionPath,
-        'src/help.html'
-      )
-      let html = fs.readFileSync(htmlPath, 'utf-8')
-      panel.webview.html = html
+        'assets/help.html'
+      );
+      let html = fs.readFileSync(htmlPath, 'utf-8');
+      panel.webview.html = html;
       
 	}));
 

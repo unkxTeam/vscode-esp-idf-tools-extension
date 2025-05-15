@@ -5,7 +5,7 @@
   "icon": "assets/unkx_icon.png",
   "publisher": "unkx",
   "license": "MIT",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "engines": {
     "vscode": "^1.99.0"
   },

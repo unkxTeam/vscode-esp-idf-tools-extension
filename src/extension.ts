@@ -2,6 +2,8 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { SerialPort } from "serialport";
+import * as fs from 'fs'
+import * as path from 'path'
 // https://github.com/microsoft/vscode-extension-samples/blob/main/helloworld-sample/package.json
 
 let selectPortCOM = "PORT";
@@ -22,8 +24,8 @@ const unkxTerminalOptions = {
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
-export function activate({ subscriptions }: vscode.ExtensionContext) {
-// export function activate(context: vscode.ExtensionContext) {
+//export function activate({ subscriptions }: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext) {
 
 	const myCommandIdSelectPort_0 = 'esp-idf.selectPort';
 	const myCommandIdSetTarget_1 = 'esp-idf.setTarget';
@@ -34,7 +36,8 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 	const myCommandIdFullclean_6 = 'esp-idf.fullclean';
 	const myCommandIdMonitor_7 = 'esp-idf.monitor';
 	const myCommandIdBuildFlashMonitor_8 = 'esp-idf.buildFlashMonitor';
-
+	const myCommandIdHelp = 'esp-idf.help';
+	
 	let myStatusBarItemSelectPort_0: vscode.StatusBarItem;
 	let myStatusBarItemSetTarget_1: vscode.StatusBarItem;
 	let myStatusBarItemMenuconfig_2: vscode.StatusBarItem;
@@ -44,6 +47,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 	let myStatusBarItemFullclean_6: vscode.StatusBarItem;
 	let myStatusBarItemMonitor_7: vscode.StatusBarItem;
 	let myStatusBarItemBuildFlashMonitor_8: vscode.StatusBarItem;
+	let myStatusBarItemdHelp: vscode.StatusBarItem;
 
 	// Create terminal
 	updateParameter();
@@ -61,8 +65,8 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 	// 7. ESP-IDF-Tools: Open Monitor Device(monitor), vm-connect, idf.py -p <PORT> monitor
 	// 8. ESP-IDF-Tools: Build,Flash and Monitor(build,flash,monitor), rocket, idf.py -p PORT flash monitor
 	// TODO: Monitor idf.py -p <PORT> monitor
-	
-	subscriptions.push(vscode.commands.registerCommand(myCommandIdSelectPort_0, () => {
+
+	context.subscriptions.push(vscode.commands.registerCommand(myCommandIdSelectPort_0, () => {
 		pickSerialPort().then(portPath => {
 			selectPortCOM = `${portPath}`;
 			myStatusBarItemSelectPort_0.text = `$(plug) ` + selectPortCOM;
@@ -75,7 +79,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 			}
 		});
 	}));
-	subscriptions.push(vscode.commands.registerCommand(myCommandIdSetTarget_1, () => {
+	context.subscriptions.push(vscode.commands.registerCommand(myCommandIdSetTarget_1, () => {
 		if (unkxTerminal.exitStatus) {
 			unkxTerminal = createUnkxTerminal();
 			unkxTerminal.sendText(get_idf_cmd);
@@ -99,7 +103,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 			unkxTerminal.sendText("idf.py set-target "+selectESPIDFTarget);
         });
 	}));
-	subscriptions.push(vscode.commands.registerCommand(myCommandIdMenuconfig_2, () => {
+	context.subscriptions.push(vscode.commands.registerCommand(myCommandIdMenuconfig_2, () => {
 		if (unkxTerminal.exitStatus) {
 			unkxTerminal = createUnkxTerminal();
 			unkxTerminal.sendText(get_idf_cmd);
@@ -107,7 +111,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 		unkxTerminal.show();
 		unkxTerminal.sendText("idf.py menuconfig");
 	}));
-	subscriptions.push(vscode.commands.registerCommand(myCommandIdBuild_3, () => {
+	context.subscriptions.push(vscode.commands.registerCommand(myCommandIdBuild_3, () => {
 		if (unkxTerminal.exitStatus) {
 			unkxTerminal = createUnkxTerminal();
 			unkxTerminal.sendText(get_idf_cmd);
@@ -115,7 +119,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 		unkxTerminal.show();
 		unkxTerminal.sendText("idf.py build");
 	}));
-	subscriptions.push(vscode.commands.registerCommand(myCommandIdFlash_4, () => {
+	context.subscriptions.push(vscode.commands.registerCommand(myCommandIdFlash_4, () => {
 		if (unkxTerminal.exitStatus) {
 			unkxTerminal = createUnkxTerminal();
 			unkxTerminal.sendText(get_idf_cmd);
@@ -123,7 +127,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 		unkxTerminal.show();
 		unkxTerminal.sendText("idf.py -p "+selectPortCOM+" flash");
 	}));
-	subscriptions.push(vscode.commands.registerCommand(myCommandIdBuildFlash_5, () => {
+	context.subscriptions.push(vscode.commands.registerCommand(myCommandIdBuildFlash_5, () => {
 		if (unkxTerminal.exitStatus) {
 			unkxTerminal = createUnkxTerminal();
 			unkxTerminal.sendText(get_idf_cmd);
@@ -131,7 +135,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 		unkxTerminal.show();
 		unkxTerminal.sendText("idf.py -p "+selectPortCOM+" flash");
 	}));
-	subscriptions.push(vscode.commands.registerCommand(myCommandIdFullclean_6, () => {
+	context.subscriptions.push(vscode.commands.registerCommand(myCommandIdFullclean_6, () => {
 		if (unkxTerminal.exitStatus) {
 			unkxTerminal = createUnkxTerminal();
 			unkxTerminal.sendText(get_idf_cmd);
@@ -139,7 +143,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 		unkxTerminal.show();
 		unkxTerminal.sendText("idf.py fullclean");
 	}));
-	subscriptions.push(vscode.commands.registerCommand(myCommandIdMonitor_7, () => {
+	context.subscriptions.push(vscode.commands.registerCommand(myCommandIdMonitor_7, () => {
 		if (unkxTerminal.exitStatus) {
 			unkxTerminal = createUnkxTerminal();
 			unkxTerminal.sendText(get_idf_cmd);
@@ -147,13 +151,31 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 		unkxTerminal.show();
 		unkxTerminal.sendText("idf.py -p "+selectPortCOM+" monitor");
 	}));
-	subscriptions.push(vscode.commands.registerCommand(myCommandIdBuildFlashMonitor_8, () => {
+	context.subscriptions.push(vscode.commands.registerCommand(myCommandIdBuildFlashMonitor_8, () => {
 		if (unkxTerminal.exitStatus) {
 			unkxTerminal = createUnkxTerminal();
 			unkxTerminal.sendText(get_idf_cmd);
 		}
 		unkxTerminal.show();
 		unkxTerminal.sendText("idf.py -p "+selectPortCOM+" flash monitor");
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand(myCommandIdHelp, () => {
+		const panel = vscode.window.createWebviewPanel(
+        'ESP-IDF-Tools Help document',
+        'ESP-IDF-Tools 帮助文档',
+        vscode.ViewColumn.One,
+        {
+          enableScripts: true,
+        }
+      )
+
+      const htmlPath = path.join(
+        context.extensionPath,
+        'src/help.html'
+      )
+      let html = fs.readFileSync(htmlPath, 'utf-8')
+      panel.webview.html = html
+      
 	}));
 
 	// create a new status bar item that we can now manage
@@ -164,64 +186,61 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 	//myStatusBarItemSelectPort_0.text = "$(loading~spin) loading..."; // 文本和图标(动画)
 	myStatusBarItemSelectPort_0.tooltip = "ESP-IDF-Tools: Select Port to Use(COM, tty)"; // 鼠标的悬浮提示
 	//myStatusBarItemSelectPort_0.backgroundColor = new vscode.ThemeColor("myStatusBarItemSelectPort_0.warningBackground"); // 背景颜色(只支持 warningBackground | errorBackground)
-	myStatusBarItemSelectPort_0.command = "learn-vscode-extends.statusClick"; // 绑定点击的命令
 	myStatusBarItemSelectPort_0.command = myCommandIdSelectPort_0;
 
 	// myCommandIdSelectPort_1
 	myStatusBarItemSetTarget_1 = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);
 	myStatusBarItemSetTarget_1.text = `$(chip) ESP32`;// 文本和图标
 	myStatusBarItemSetTarget_1.tooltip = "ESP-IDF-Tools: Set Espressif device target(IDF_TAGET)"; // 鼠标的悬浮提示
-	myStatusBarItemSetTarget_1.command = "learn-vscode-extends.statusClick"; // 绑定点击的命令
 	myStatusBarItemSetTarget_1.command = myCommandIdSetTarget_1;
 
 	// myCommandIdMenuconfig_2
 	myStatusBarItemMenuconfig_2 = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);
 	myStatusBarItemMenuconfig_2.text = `$(notebook-render-output)`;// 文本和图标
 	myStatusBarItemMenuconfig_2.tooltip = "ESP-IDF-Tools: SDK Configuration Editor(menuconfig)"; // 鼠标的悬浮提示
-	myStatusBarItemMenuconfig_2.command = "learn-vscode-extends.statusClick"; // 绑定点击的命令
 	myStatusBarItemMenuconfig_2.command = myCommandIdMenuconfig_2;
 
 	// myCommandIdSetBuild_3
 	myStatusBarItemSetBuild_3 = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);
 	myStatusBarItemSetBuild_3.text = `$(notebook-kernel-select)`;// 文本和图标
 	myStatusBarItemSetBuild_3.tooltip = "ESP-IDF-Tools: Build project(build)"; // 鼠标的悬浮提示
-	myStatusBarItemSetBuild_3.command = "learn-vscode-extends.statusClick"; // 绑定点击的命令
 	myStatusBarItemSetBuild_3.command = myCommandIdBuild_3;
 
 	// myCommandIdSetFlash_4
 	myStatusBarItemSetFlash_4 = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);
 	myStatusBarItemSetFlash_4.text = `$(zap)`;// 文本和图标
 	myStatusBarItemSetFlash_4.tooltip = "ESP-IDF-Tools: Flash to Espressif device(flash)"; // 鼠标的悬浮提示
-	myStatusBarItemSetFlash_4.command = "learn-vscode-extends.statusClick"; // 绑定点击的命令
 	myStatusBarItemSetFlash_4.command = myCommandIdFlash_4;
 
 	// myCommandIdBuildFlash_5
 	myStatusBarItemBuildFlash_5 = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);
 	myStatusBarItemBuildFlash_5.text = `$(github-action)`;// 文本和图标
 	myStatusBarItemBuildFlash_5.tooltip = "ESP-IDF-Tools: Build and Flash"; // 鼠标的悬浮提示
-	myStatusBarItemBuildFlash_5.command = "learn-vscode-extends.statusClick"; // 绑定点击的命令
 	myStatusBarItemBuildFlash_5.command = myCommandIdBuildFlash_5;
 
 	// myCommandIdFullclean_6
 	myStatusBarItemFullclean_6 = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);
 	myStatusBarItemFullclean_6.text = `$(notebook-delete-cell)`;// 文本和图标
 	myStatusBarItemFullclean_6.tooltip = "ESP-IDF-Tools: Full clean(fullclean)"; // 鼠标的悬浮提示
-	myStatusBarItemFullclean_6.command = "learn-vscode-extends.statusClick"; // 绑定点击的命令
 	myStatusBarItemFullclean_6.command = myCommandIdFullclean_6;
 
 	// myCommandIdmonitor_7
 	myStatusBarItemMonitor_7 = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);
 	myStatusBarItemMonitor_7.text = `$(vm-connect)`;// 文本和图标
 	myStatusBarItemMonitor_7.tooltip = "ESP-IDF-Tools: Open Monitor Device"; // 鼠标的悬浮提示
-	myStatusBarItemMonitor_7.command = "learn-vscode-extends.statusClick"; // 绑定点击的命令
 	myStatusBarItemMonitor_7.command = myCommandIdMonitor_7;
 
 	// myCommandIdBuildFlashMonitor_8
 	myStatusBarItemBuildFlashMonitor_8 = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);
 	myStatusBarItemBuildFlashMonitor_8.text = `$(rocket)`;// 文本和图标
 	myStatusBarItemBuildFlashMonitor_8.tooltip = "ESP-IDF-Tools: Build,Flash and Monitor"; // 鼠标的悬浮提示
-	myStatusBarItemBuildFlashMonitor_8.command = "learn-vscode-extends.statusClick"; // 绑定点击的命令
 	myStatusBarItemBuildFlashMonitor_8.command = myCommandIdBuildFlashMonitor_8;
+
+	// myStatusBarItemdHelp
+	myStatusBarItemdHelp = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);
+	myStatusBarItemdHelp.text = `$(question)`;// 文本和图标)
+	myStatusBarItemdHelp.tooltip = "ESP-IDF-Tools: Help document"; // 鼠标的悬浮提示
+	myStatusBarItemdHelp.command = myCommandIdHelp;
 
 	// update status bar item once at start
 	myStatusBarItemSelectPort_0.show();
@@ -233,17 +252,17 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 	myStatusBarItemFullclean_6.show();
 	myStatusBarItemMonitor_7.show();
 	myStatusBarItemBuildFlashMonitor_8.show();
-	//updateStatusBarItem();
+	myStatusBarItemdHelp.show();
 	
-	subscriptions.push(myStatusBarItemSelectPort_0);
-	subscriptions.push(myStatusBarItemSetTarget_1);
-	subscriptions.push(myStatusBarItemMenuconfig_2);
-	subscriptions.push(myStatusBarItemSetBuild_3);
-	subscriptions.push(myStatusBarItemBuildFlash_5);
-	subscriptions.push(myStatusBarItemFullclean_6);
-	subscriptions.push(myStatusBarItemMonitor_7);
-	subscriptions.push(myStatusBarItemBuildFlashMonitor_8);
-	//subscriptions.push(disposable);
+	context.subscriptions.push(myStatusBarItemSelectPort_0);
+	context.subscriptions.push(myStatusBarItemSetTarget_1);
+	context.subscriptions.push(myStatusBarItemMenuconfig_2);
+	context.subscriptions.push(myStatusBarItemSetBuild_3);
+	context.subscriptions.push(myStatusBarItemBuildFlash_5);
+	context.subscriptions.push(myStatusBarItemFullclean_6);
+	context.subscriptions.push(myStatusBarItemMonitor_7);
+	context.subscriptions.push(myStatusBarItemBuildFlashMonitor_8);
+	context.subscriptions.push(myStatusBarItemdHelp);
 	//context.subscriptions.push(disposable);
 
 	unkxTerminal.show();

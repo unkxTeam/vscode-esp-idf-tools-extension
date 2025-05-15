@@ -1,0 +1,52 @@
+<h1>参考资料</h1>
+<ol>
+<li><p>乐鑫官方的<a href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/index.html">ESP-IDF文档中心</a></p>
+</li>
+<li><p>esp-idf常用命令及总结：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>idf.py set-target esp32c3</td>
+<td>设置目标芯片，比如：<br />esp32 esp32s2 esp32c3 esp32s3 esp32p4 ...</td>
+</tr>
+<tr>
+<td>idf.py menuconfig</td>
+<td>配置目标芯片、项目功能组件等</td>
+</tr>
+<tr>
+<td>idf.py build</td>
+<td>编译工程代码</td>
+</tr>
+<tr>
+<td>idf.py clean</td>
+<td>会把构建输出的文件从构建目录中删除，从而清理整个项目。<br />下次构建时会强制“重新完整构建”这个项目。清理时，不会删除 CMake 配置输出及其他文件。</td>
+</tr>
+<tr>
+<td>idf.py fullclean</td>
+<td>会将整个 build 目录下的内容全部删除，包括所有 CMake 的配置输出文件。<br />下次构建项目时，CMake 会从头开始配置项目。</td>
+</tr>
+<tr>
+<td>idf.py -p PORT flash</td>
+<td>将程序下载到目标芯片，其中PORT要改为对应的串口号，比如：COM3，/dev/ttyUSB0</td>
+</tr>
+<tr>
+<td>idf.py -p PORT monitor</td>
+<td>打开串口监视器，查看LOG日志输出。其中PORT要改为对应的串口号，比如：COM3，/dev/ttyUSB0</td>
+</tr>
+<tr>
+<td>idf.py -p PORT flash monitor</td>
+<td>一次性实现：编译、烧录、打开串口监视器，查看LOG日志输出。其中PORT要改为对应的串口号，比如：COM3，/dev/ttyUSB0</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<h1>视频教程</h1>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV1YUL1z3Ee2">哔哩哔哩</a></li>
+<li><a href="https://youtube.com/playlist?list=PLLlul6hf_nLnqmhkqW7F4g8KuBVbn2fv7&si=ErHBLomNsJbYmH17">YouTube</a></li>
+</ul>
